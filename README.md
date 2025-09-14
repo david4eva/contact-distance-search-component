@@ -16,7 +16,7 @@ A sophisticated Lightning Web Component that enables intelligent contact searchi
 
 **📹 [Watch 7-Minute Demo Video](https://drive.google.com/file/d/1a1vpjdu8baxVGLTjbQQ5s1bCIDRX_qUe/view?usp=sharing)**
 
-*Showcases all search modes, responsive design, and assignment functionality*
+*Showcases all search modes, responsive design, and assignment functionality* lll
 
 ## Features
 
