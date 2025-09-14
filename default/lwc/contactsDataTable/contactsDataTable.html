@@ -1,0 +1,131 @@
+<template>
+  <!-- Contact lightning card -->
+  <div class="slds-var-m-left_small slds-var-m-top_medium">
+    <lightning-card title="Contacts" icon-name="standard:contact"></lightning-card>
+  </div>
+
+  <!-- Search by name, state or distance -->
+  <div class="slds-var-m-around_large">
+    <lightning-combobox name="searchBy" label="Search by Name, State or Distance" value={searchBySelection}
+      placeholder="Search by state or distance..." options={searchByOptions} onchange={handleSearchByChange}>
+    </lightning-combobox>
+  </div>
+
+  <!-- Search name -->
+  <template if:true={showName}>
+    <div class="slds-var-m-around_large">
+      <lightning-input type="text" name="searchName" label="Search Name" value={searchName}
+        onchange={handleSearchNameChange} placeholder="Enter name to search...">
+      </lightning-input>
+    </div>
+  </template>
+
+  <!-- Search radius -->
+  <template if:true={showDistance}>
+    <div class="slds-var-m-around_large">
+      <lightning-combobox name="searchRadius" label="Search Radius (miles)" value={searchRadiusSelection}
+        placeholder="Choose a search radius..." options={distanceOptions} onchange={handleSearchRadiusChange}>
+      </lightning-combobox>
+    </div>
+  </template>
+
+  <!-- Custom search radius -->
+  <template if:true={customRadius}>
+    <div class="slds-var-m-around_large">
+      <lightning-input type="number" name="customRadius" label="Custom Radius (miles)" value={customRadiusValue}
+        onchange={handleCustomRadiusChange} min="1" step="1">
+      </lightning-input>
+    </div>
+  </template>
+
+  <!-- State picker -->
+  <template if:true={showState}>
+    <div class="slds-var-m-around_large">
+      <lightning-combobox name="state" label="Select State" value={selectedState} placeholder="Choose a state..."
+        options={stateOptions} onchange={handleStateChange}>
+      </lightning-combobox>
+    </div>
+  </template>
+
+  <!-- Lightning spinner -->
+  <template if:true={isLoading}>
+    <div class="slds-align_absolute-center slds-var-p-around_large">
+      <lightning-spinner alternative-text="Loading contacts" size="medium"></lightning-spinner>
+    </div>
+  </template>
+
+  <!-- Desktop/Tablet: normal datatable -->
+  <template if:true={hasContacts}>
+    <template if:false={isPhone}>
+      <div class="slds-var-m-around_medium">
+        <lightning-datatable key-field="Id" data={contacts} columns={currentColumns} show-row-number-column
+          max-row-selection="1" single-row-selection-mode="radio" onrowselection={handleRowSelection}>
+        </lightning-datatable>
+      </div>
+    </template>
+
+    <!-- Phone: stacked, mobile-friendly list -->
+    <template if:true={isPhone}>
+      <div class="slds-var-m-around_medium">
+        <ul role="list" class="slds-m-top_small">
+          <template for:each={contacts} for:item="c">
+            <li key={c.Id} role="listitem" class="slds-card slds-m-bottom_x-small">
+              <div class="slds-card__body slds-p-around_small">
+                <div class="slds-text-title_caps slds-m-bottom_xx-small">{c.Name}</div>
+                <div class="slds-text-body_small">
+                  <template if:true={c.Email}>
+                    <div><strong>Email:</strong> {c.Email}</div>
+                  </template>
+                  <template if:true={c.Phone}>
+                    <div><strong>Phone:</strong> {c.Phone}</div>
+                  </template>
+                  <template if:true={c.MailingCity}>
+                    <div><strong>City/State:</strong> {c.MailingCity}, {c.MailingState}</div>
+                  </template>
+                  <template if:true={c.AccountName}>
+                    <div><strong>Account:</strong> {c.AccountName}</div>
+                  </template>
+                </div>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </template>
+  </template>
+
+  <!-- No contacts found message -->
+  <template if:false={hasContacts}>
+    <template if:false={isLoading}>
+      <div class="slds-text-color_error slds-text-title_bold slds-var-m-around_x-large slds-align_absolute-center">
+        <p>{errorMsg}</p>
+      </div>
+    </template>
+  </template>
+
+  <!-- Pagination Controls -->
+  <template if:true={hasContacts}>
+    <div class="slds-m-top_medium slds-align_absolute-center slds-var-p-around_medium">
+      <lightning-button-icon icon-name="utility:chevronleft" alternative-text="Previous" onclick={handlePrev}
+        class="slds-m-right_small">
+      </lightning-button-icon>
+
+      <span class="slds-m-horizontal_small slds-text-body_regular">
+        Page {pageNumber} of {totalPages} ({totalRecords} total contacts)
+      </span>
+
+      <lightning-button-icon icon-name="utility:chevronright" alternative-text="Next" onclick={handleNext}
+        disabled={isLastPage} class="slds-m-left_small">
+      </lightning-button-icon>
+    </div>
+  </template>
+
+  <!-- Footer -->
+  <div slot="footer"
+    class="slds-var-m-top_x-large slds-var-m-bottom_x-large slds-var-m-right_large slds-text-align_right">
+    <lightning-button variant="neutral" label="Cancel" onclick={handleCancel}
+      class="slds-var-m-around_x-small"></lightning-button>
+    <lightning-button title="Assign selected contact to this case" variant="brand" label="Assign" onclick={handleAssignment}
+      class="slds-var-m-left_x-small" disabled={assignmentDisabled}></lightning-button>
+  </div>
+</template>
