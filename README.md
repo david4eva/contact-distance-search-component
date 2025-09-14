@@ -14,7 +14,7 @@ A sophisticated Lightning Web Component that enables intelligent contact searchi
 
 ## Demo
 
-**📹 [Watch 3-Minute Demo Video](https://your-video-link-here.com)**
+**📹 [Watch 3-Minute Demo Video]([https://your-video-link-here.com](https://drive.google.com/file/d/1a1vpjdu8baxVGLTjbQQ5s1bCIDRX_qUe/view?usp=sharing)**
 
 *Showcases all search modes, responsive design, and assignment functionality*
 
@@ -275,8 +275,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contact
 
-**Project Author**: [David Elias]  
-**LinkedIn**: [Your LinkedIn Profile]()
+**Project Author**: David Elias
+**LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/david-j-elias/)
 
 ## Acknowledgments
 
